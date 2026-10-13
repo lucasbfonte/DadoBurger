@@ -1,0 +1,6 @@
+*.o
+*.exe
+dado_burger
+medicoes.log
+pedidos*.txt
+historico*.txt
