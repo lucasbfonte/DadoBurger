@@ -18,8 +18,8 @@ Estas notas viram materia-prima do relatorio.
 
 ## Divisao de tarefas
 
-- Integrante 1: _..._
-- Integrante 2: _..._
+- Lucas:
+- Rodrigo:
 
 ## Regra de arquitetura (pensando na raylib)
 
