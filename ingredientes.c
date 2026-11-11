@@ -1,7 +1,6 @@
 
 #include <string.h>
-
-#include "Ingredientes.h"
+#include "ingredientes.h"
 
 typedef struct {
     char        simbolo;

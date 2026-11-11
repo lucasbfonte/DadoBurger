@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-#include "Ingredientes.h"
+#include "ingredientes.h"
 
 typedef enum {
     LEITURA_OK,
