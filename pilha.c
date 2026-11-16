@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pilha.h"
+#include "lista.h"
 
 void pilhaInicializa(PilhaEnc *p) {
     p->topo = NULL;
@@ -61,4 +62,41 @@ void pilhaEsvaziar(PilhaEnc *p) {
         p->topo = aux->prox;
         free(aux);
     }
+}
+
+// retorno: 1 = bate, 0 = não bate, -1 = erro de memória
+int pilhaVerifica(PilhaEnc *p, const ListaEnc *receita) {
+    PilhaEnc aux;
+    Ingrediente ing;
+    pilhaInicializa(&aux);
+
+    while (pilhaDesempilha(p, &ing)) {
+        if (!pilhaEmpilha(&aux, ing)) {
+            pilhaEsvaziar(&aux);
+            return -1;
+        }
+    }
+
+    const nodoLista *no = receita->ini;
+    int confere = 1;
+
+    while (pilhaDesempilha(&aux, &ing)) {
+        if (no != NULL) {
+            if (ing != no->dado) {
+                confere = 0;
+            }
+            no = no->prox; // avança na lista
+        } else {
+            confere = 0; // a lista acabou, mas ainda há ingredientes na pilha
+        }
+        if (!pilhaEmpilha(p, ing)) {
+            pilhaEsvaziar(&aux);
+            return -1; // falha na alocação
+        }
+    }
+
+    if (no != NULL) {
+        confere = 0;
+    }
+    return confere;
 }
