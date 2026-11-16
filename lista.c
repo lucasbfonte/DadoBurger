@@ -1,6 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include "listaEnc.h"
+#include "lista.h"
 
 void listaInicializar(ListaEnc *lista) {
     lista->ini = NULL;
@@ -65,4 +64,28 @@ void listaDestruir(ListaEnc *lista) {
     }
 
     lista->ini = NULL;
+}
+
+int listaMontar(ListaEnc *lista, const char *receita) {
+    listaInicializar(lista);
+    int sucesso = 1;
+
+    for (const char *p = receita; *p != '\0'; p++) {
+        int ing = ingrediente_de_simbolo(*p);
+        if (ing < 0 || ing >= ING_TOTAL) { // símbolo inválido
+            sucesso = 0;
+            break;
+        }
+        Ingrediente ingrediente = (Ingrediente)ing; // converte para o tipo Ingrediente
+        if (!listaInserirFim(lista, ingrediente)) { // falha na inserção
+            sucesso = 0;
+            break;
+        }
+    }
+
+    if (!sucesso) {
+        listaDestruir(lista);
+    }
+
+    return sucesso;
 }
