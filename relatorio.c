@@ -48,3 +48,27 @@ void relatorioHash(FILE *out, const Pedidos *p)
     fprintf(out, "\n");
     fflush(out);
 }
+
+void relatorioCargaHistorico(FILE *out, int carregadas)
+{
+    fprintf(out, "-- Historico: carregamento --\n");
+    fprintf(out, "%-30s %d\n", "Entradas carregadas:", carregadas);
+    fprintf(out, "\n");
+    fflush(out);
+}
+
+void relatorioOrdenacao(FILE *out, int n, CriterioOrdem c, double tempo)
+{
+    fprintf(out, "-- Ordenacao do historico (ao acessar Historico) --\n");
+    fprintf(out, "%-30s %d entradas\n", "Tamanho:", n);
+    fprintf(out, "%-30s %s\n",        "Criterio:", historicoNomeCriterio(c));
+    fprintf(out, "%-30s %.6f s\n",    "Merge Sort:", tempo);
+    fprintf(out, "\n");
+    fflush(out);
+}
+
+void relatorioRodape(FILE *out)
+{
+    fprintf(out, "================================\n\n");
+    fflush(out);
+}

@@ -1,25 +1,36 @@
-# Compila todos os .c do diretorio, equivalente ao comando do Apendice C:
-#   gcc -o dado_burger main.c avl.c hash.c heap.c pilha.c fila.c lista.c timer.c -lm -Wall -std=c99
+# Dado Burger - INF01203
+#
+#   make           versao grafica (raylib)       -> ./dado_burger
+#   make texto     versao terminal (sem raylib)  -> ./dado_burger
+#   make run       compila e roda com pedidos.txt historico.txt
+#
+# Pasta da raylib pre-compilada (release raylib-5.0_linux_amd64).
+# Para usar outra: make RAYLIB=/caminho/da/raylib
+RAYLIB ?= $(HOME)/raylib-5.0_linux_amd64
 
 CC      = gcc
 CFLAGS  = -Wall -std=c99
-LDLIBS  = -lm
-SRC     = $(wildcard *.c)
-OBJ     = $(SRC:.c=.o)
 BIN     = dado_burger
 
-all: $(BIN)
+# Modulos comuns as duas interfaces
+COMUM = main.c avl.c hash.c heap.c pilha.c fila.c lista.c timer.c \
+        ingredientes.c arquivos.c pedidos.c historico.c partida.c \
+        relatorio.c sessao.c textos.c personagens.c
 
-$(BIN): $(OBJ)
-	$(CC) -o $@ $^ $(LDLIBS)
+GUI_LIBS = -L$(RAYLIB)/lib -l:libraylib.a -lGL -lm -lpthread -ldl -lrt -lX11
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+all: gui
 
-run: $(BIN)
+gui: $(COMUM) interface_raylib.c
+	$(CC) $(CFLAGS) -O2 -I$(RAYLIB)/include -o $(BIN) $^ $(GUI_LIBS)
+
+texto: $(COMUM) interface_texto.c
+	$(CC) $(CFLAGS) -O2 -o $(BIN) $^ -lm
+
+run: all
 	./$(BIN) pedidos.txt historico.txt
 
 clean:
-	rm -f $(OBJ) $(BIN) medicoes.log
+	rm -f *.o $(BIN) medicoes.log
 
-.PHONY: all run clean
+.PHONY: all gui texto run clean

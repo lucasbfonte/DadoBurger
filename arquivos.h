@@ -23,4 +23,15 @@ ResultadoLeitura ler_pedido(FILE *fp, int *codigo,
                             char receita[RECEITA_MAX + 1],
                             long *linha_erro);
 
+#define NOME_MAX 20   /* nome do jogador no historico: ate 20 caracteres */
+
+/* Le a proxima entrada do historico (duas linhas: nome e pontuacao).
+ * Nomes maiores que NOME_MAX sao truncados. */
+ResultadoLeitura ler_historico(FILE *fp, char nome[NOME_MAX + 1],
+                               int *pontos, long *linha_erro);
+
+/* Acrescenta uma entrada no fim do arquivo (modo "a"), preservando as
+ * anteriores. Retorna 0 se nao conseguiu abrir/gravar. */
+int gravar_historico(const char *arquivo, const char *nome, int pontos);
+
 #endif
