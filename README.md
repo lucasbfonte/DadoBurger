@@ -204,4 +204,4 @@ interface_texto / interface_raylib
 
 ## Autores
 
-Lucas ([@lucasbfonte](https://github.com/lucasbfonte)) e Rodrigo.
+Lucas Becker Fonte([@lucasbfonte](https://github.com/lucasbfonte)) & Rodrigo Erig Weiller (@rodrigoweiller)
